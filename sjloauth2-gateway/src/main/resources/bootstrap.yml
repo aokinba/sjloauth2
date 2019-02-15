@@ -52,7 +52,7 @@ spring:
           uaa:
             authorization-uri: http://localhost:7777/uaa/oauth/authorize
             token-uri: http://localhost:7777/uaa/oauth/token
-            user-info-uri: http://localhost:7070/test
+            user-info-uri: http://localhost:7070/userinfo
             user-name-attribute: sub
         resource:
           jwt:

@@ -1,6 +1,5 @@
 package com.sjl.sjloauth2.client;
 
-import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -32,7 +31,12 @@ public class ClientAApplication extends ResourceServerConfigurerAdapter {
     }
 
     @RequestMapping("/test")
-    public Map test(HttpServletRequest request) {
+    public String test(HttpServletRequest request) {
+        return "test";
+    }
+
+    @RequestMapping("/userinfo")
+    public Map userinfo(HttpServletRequest request) {
         System.out.println("=====================userinfo=================");
         Map map = new HashMap();
         map.put("user", "username");
