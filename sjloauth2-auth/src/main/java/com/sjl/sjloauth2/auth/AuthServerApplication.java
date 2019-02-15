@@ -30,14 +30,6 @@ public class AuthServerApplication extends WebSecurityConfigurerAdapter {
         return super.authenticationManagerBean();
     }
 
-    @RequestMapping("/userinfo")
-    public Map test(HttpServletRequest request) {
-        System.out.println("=====================userinfo=================");
-        Map map = new HashMap();
-        map.put("user", "username");
-        return map;
-    }
-
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         //https://blog.csdn.net/my_learning_road/article/details/79833802

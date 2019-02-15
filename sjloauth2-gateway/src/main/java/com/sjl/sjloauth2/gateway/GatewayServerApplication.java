@@ -1,8 +1,13 @@
 package com.sjl.sjloauth2.gateway;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
+import org.springframework.cloud.gateway.route.RouteLocator;
+import org.springframework.cloud.gateway.route.builder.RouteLocatorBuilder;
+import org.springframework.cloud.security.oauth2.gateway.TokenRelayGatewayFilterFactory;
+import org.springframework.context.annotation.Bean;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.client.OAuth2AuthorizedClient;
 import org.springframework.security.oauth2.client.annotation.RegisteredOAuth2AuthorizedClient;
@@ -28,6 +33,18 @@ public class GatewayServerApplication {
         model.addAttribute("clientName", authorizedClient.getClientRegistration().getClientName());
         model.addAttribute("userAttributes", oauth2User.getAttributes());
         return "index";
+    }
+
+    @Autowired
+    private TokenRelayGatewayFilterFactory filterFactory;
+
+    @Bean
+    public RouteLocator customRouteLocator(RouteLocatorBuilder builder) {
+        return builder.routes()
+                .route("test", r -> r.path("/test")
+                .filters(f -> f.filter(filterFactory.apply()))
+                .uri("http://localhost:7070/test"))
+                .build();
     }
 
 }

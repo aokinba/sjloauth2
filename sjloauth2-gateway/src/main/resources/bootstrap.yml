@@ -8,19 +8,6 @@ eureka:
   instance:
     prefer-ip-address: true
     
-cloud:
-    gateway:
-      discovery:
-        locator:
-          enabled: true
-      routes:
-        - id: CLIENT-A           #网关路由到订单服务order-service
-          uri: lb://CLIENT-A
-          predicates:
-            - Path=/client/**
-          filters:
-            - StripPrefix=1
-
 logging:
   level:
     root: INFO
@@ -31,6 +18,20 @@ logging:
 #    org.springframework.boot.autoconfigure: DEBUG
 
 spring:
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+      routes:
+        - id: CLIENT-A           #网关路由到订单服务order-service
+          uri: lb://CLIENT-A
+          predicates:
+            - Path=/client/**
+          filters:
+            - TokenRelay=
+            - StripPrefix=1
+            
   autoconfigure:
     # TODO: remove when fixed https://github.com/spring-projects/spring-security/issues/6314
     exclude: org.springframework.boot.actuate.autoconfigure.security.reactive.ReactiveManagementWebSecurityAutoConfiguration
