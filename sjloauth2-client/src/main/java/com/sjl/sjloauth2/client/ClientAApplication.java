@@ -49,9 +49,8 @@ public class ClientAApplication extends ResourceServerConfigurerAdapter {
         http
                 .csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/**").authenticated()
-                .antMatchers(HttpMethod.GET, "/test")
-                .hasAuthority("WRIGTH_READ");
+                .antMatchers(HttpMethod.GET, "/test").hasAuthority("WRIGTH_WRITE")
+                .antMatchers("/**").authenticated();
     }
 
     @Override
