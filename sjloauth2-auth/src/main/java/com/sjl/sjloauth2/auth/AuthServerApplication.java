@@ -1,8 +1,6 @@
 package com.sjl.sjloauth2.auth;
 
-import java.util.HashMap;
 import java.util.Map;
-import javax.servlet.http.HttpServletRequest;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
@@ -12,7 +10,8 @@ import org.springframework.security.config.BeanIds;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 @SpringBootApplication
@@ -38,6 +37,13 @@ public class AuthServerApplication extends WebSecurityConfigurerAdapter {
                 .withUser("guest").password("guest").authorities("WRIGTH_READ")
                 .and()
                 .withUser("admin").password("admin").authorities("WRIGTH_READ", "WRIGTH_WRITE");
+    }
+
+    @PostMapping("/testPost")
+    public void testPost(@RequestBody Map<String, Object> reqMap) {
+        for(Map.Entry<String, Object> entry:reqMap.entrySet()){
+            System.out.println(entry.getValue());
+        }
     }
 
     @Bean

@@ -28,7 +28,8 @@ public class OAuthConfiguration extends AuthorizationServerConfigurerAdapter {
                 .scopes("WRIGTH", "read").autoApprove(true)
                 .authorities("WRIGTH_READ", "WRIGTH_WRITE")
                 .authorizedGrantTypes("implicit", "refresh_token", "password", "authorization_code")
-                .redirectUris("http://www.baidu.com","http://localhost:8080/login/oauth2/code/test_server");
+                .redirectUris("http://www.baidu.com", "http://localhost:8080/login/oauth2/code/test_server", "http://localhost:9528/login?redirect=/dashboard",
+                         "http://localhost:9999/login");
     }
 
     @Override
