@@ -41,7 +41,10 @@ public class ClientAApplication extends ResourceServerConfigurerAdapter {
         Map map = new HashMap();
         map.put("id", "9527");
         map.put("login", "苏敬龙");
+        map.put("name", "苏敬龙");
         map.put("avatar_url", "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1550666170043&di=67d097870ccd1317c61d217330c64d20&imgtype=0&src=http%3A%2F%2Fimage.uc.cn%2Fo%2Fwemedia%2Fs%2Fupload%2F2018%2F8d2e520e1c7caea3791ca037db7b323ax640x427x29.jpeg%3B%2C4%2Cjpegx%3B3%2C700x.jpg");
+        map.put("avatar", "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1550666170043&di=67d097870ccd1317c61d217330c64d20&imgtype=0&src=http%3A%2F%2Fimage.uc.cn%2Fo%2Fwemedia%2Fs%2Fupload%2F2018%2F8d2e520e1c7caea3791ca037db7b323ax640x427x29.jpeg%3B%2C4%2Cjpegx%3B3%2C700x.jpg");
+        map.put("roles", new String[]{"read","write"});
         
         return map;
     }
