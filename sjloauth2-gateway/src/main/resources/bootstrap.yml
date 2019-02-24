@@ -29,38 +29,44 @@ spring:
           predicates:
             - Path=/client/**
           filters:
-#            - TokenRelay=
+            - TokenRelay=
             - StripPrefix=1
-#            - JwtCheck
         - id: AUTH-SERVER          #vue 接入oauth
           uri: lb://AUTH-SERVER
           predicates:
             - Path=/uaa/**
+        - id: SJLIMG-SERVER           #网关路由到圖片服務
+          uri: lb://SJLIMG-SERVER
+          predicates:
+            - Path=/imgserver/**
+          filters:
+            - TokenRelay=
+            - StripPrefix=1
    
 
 # 以下为网关中继的配置
-#  autoconfigure:
-#    # TODO: remove when fixed https://github.com/spring-projects/spring-security/issues/6314
-#    exclude: org.springframework.boot.actuate.autoconfigure.security.reactive.ReactiveManagementWebSecurityAutoConfiguration
-#  thymeleaf:
-#    cache: false
-#  security:
-#    oauth2:
-#      client:
-#        registration:
-#          test_server:
-#            provider: uaa
-#            client-id: test_server
-#            client-secret: secret
-#            authorization-grant-type: authorization_code
-#            redirect-uri-template: "{baseUrl}/login/oauth2/code/{registrationId}"
-#            scope: WRIGTH,read
-#        provider:
-#          uaa:
-#            authorization-uri: http://localhost:7777/uaa/oauth/authorize
-#            token-uri: http://localhost:7777/uaa/oauth/token
-#            user-info-uri: http://localhost:7070/userinfo
-#            user-name-attribute: sub
-#        resource:
-#          jwt:
-#            key-value: springcloud123 #使用对称加密方式，默认算法为HS256
+  autoconfigure:
+    # TODO: remove when fixed https://github.com/spring-projects/spring-security/issues/6314
+    exclude: org.springframework.boot.actuate.autoconfigure.security.reactive.ReactiveManagementWebSecurityAutoConfiguration    
+  thymeleaf:
+    cache: false
+  security:
+    oauth2:
+      client:
+        registration:
+          test_server:
+            provider: uaa
+            client-id: test_server
+            client-secret: secret
+            authorization-grant-type: authorization_code
+            redirect-uri-template: "{baseUrl}/login/oauth2/code/{registrationId}"
+            scope: WRIGTH,read
+        provider:
+          uaa:
+            authorization-uri: http://localhost:7777/uaa/oauth/authorize
+            token-uri: http://localhost:7777/uaa/oauth/token
+            user-info-uri: http://localhost:7070/userinfo
+            user-name-attribute: sub
+        resource:
+          jwt:
+            key-value: springcloud123 #使用对称加密方式，默认算法为HS256
