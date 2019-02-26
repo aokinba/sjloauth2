@@ -30,8 +30,8 @@ spring:
             - Path=/client/**
           filters:
 #            - TokenRelay=
+            - MyPre=     #必须要放在StripPrefix前面，不要path路径会变
             - StripPrefix=1
-            - MyPre=
 #            - AddRequestParameter=access_token,eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1NTExMTkwNTIsInVzZXJfbmFtZSI6ImFkbWluIiwiYXV0aG9yaXRpZXMiOlsiV1JJR1RIX1dSSVRFIiwiV1JJR1RIX1JFQUQiXSwianRpIjoiYzJlZmE2MWUtNTFjNy00NDJlLWJjNGEtNTQzMmY2OWY5ZmQwIiwiY2xpZW50X2lkIjoidGVzdF9zZXJ2ZXIiLCJzY29wZSI6WyJXUklHVEgiLCJyZWFkIl19.AGyFjPpuHrjZ_n_3XdIoBBs_IQRV2kuDpJvYxHj-x34
         - id: AUTH-SERVER          #vue 接入oauth
           uri: lb://AUTH-SERVER

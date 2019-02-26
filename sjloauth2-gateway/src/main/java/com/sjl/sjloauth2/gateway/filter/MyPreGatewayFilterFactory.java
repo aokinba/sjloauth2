@@ -9,6 +9,7 @@ import com.google.gson.Gson;
 import com.sjl.sjloauth2.gateway.utils.AuthServerWebClient;
 import com.sjl.sjloauth2.gateway.utils.TokenContextHolder;
 import io.micrometer.core.instrument.util.StringUtils;
+import java.net.URI;
 import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.gateway.filter.GatewayFilter;
@@ -39,10 +40,10 @@ public class MyPreGatewayFilterFactory extends AbstractGatewayFilterFactory<MyPr
             //request before calling chain.filter
 //            ServerHttpRequest.Builder builder = exchange.getRequest().mutate();
 //            //use builder to manipulate the request
-
             String token = exchange.getRequest().getQueryParams().getFirst("access_token");
             String code = exchange.getRequest().getQueryParams().getFirst("code");
-            String path = exchange.getRequest().getPath().toString();
+            URI uri = exchange.getRequest().getURI();
+            String path = uri.getPath();
             System.out.println("=========================");
             System.out.println("=========================path = " + path + "  code = " + code);
             System.out.println("=========================");
@@ -62,10 +63,9 @@ public class MyPreGatewayFilterFactory extends AbstractGatewayFilterFactory<MyPr
                 Gson g = new Gson();
                 Map m = g.fromJson(result, Map.class);
                 TokenContextHolder.set((String) m.get("access_token"));
-                exchange.getResponse().getHeaders().add("Location", "/client/test");
-                exchange.getResponse().setStatusCode(HttpStatus.FOUND);
-                return exchange.getResponse().setComplete();
-
+//                exchange.getResponse().getHeaders().add("Location", "/client/test");
+//                exchange.getResponse().setStatusCode(HttpStatus.FOUND);
+//                return exchange.getResponse().setComplete();
             }
 
             if (StringUtils.isNotBlank(TokenContextHolder.getToken())) {
