@@ -1,4 +1,4 @@
-package com.sjl.sjloauth2.gateway;
+package com.sjl.sjloauth2.gateway.filter;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;

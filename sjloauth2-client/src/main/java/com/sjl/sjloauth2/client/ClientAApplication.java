@@ -1,5 +1,6 @@
 package com.sjl.sjloauth2.client;
 
+import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -33,9 +34,19 @@ public class ClientAApplication extends ResourceServerConfigurerAdapter {
 
     @RequestMapping("/test")
     public String test(HttpServletRequest request) {
+        //通过getHeaderNames获得所有头名字的Enumeration集合
+
+        Enumeration<String> headNames = request.getHeaderNames();
+        while (headNames.hasMoreElements()) {
+            String headName = headNames.nextElement();
+            System.out.println(headName + ":" + request.getHeader(headName));
+        }
+
+        System.out.println("getQueryString : " + request.getPathInfo());
+
         return "test";
     }
-    
+
     @RequestMapping("/userinfo")
     public Mono<Map> userinfo(HttpServletRequest request) {
         System.out.println("=====================userinfo=================");
@@ -46,8 +57,8 @@ public class ClientAApplication extends ResourceServerConfigurerAdapter {
         map.put("sub", "苏敬龙");
         map.put("avatar_url", "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1550666170043&di=67d097870ccd1317c61d217330c64d20&imgtype=0&src=http%3A%2F%2Fimage.uc.cn%2Fo%2Fwemedia%2Fs%2Fupload%2F2018%2F8d2e520e1c7caea3791ca037db7b323ax640x427x29.jpeg%3B%2C4%2Cjpegx%3B3%2C700x.jpg");
         map.put("avatar", "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1550666170043&di=67d097870ccd1317c61d217330c64d20&imgtype=0&src=http%3A%2F%2Fimage.uc.cn%2Fo%2Fwemedia%2Fs%2Fupload%2F2018%2F8d2e520e1c7caea3791ca037db7b323ax640x427x29.jpeg%3B%2C4%2Cjpegx%3B3%2C700x.jpg");
-        map.put("roles", new String[]{"read","write"});
-        
+        map.put("roles", new String[]{"read", "write"});
+
         return Mono.just(map);
     }
 

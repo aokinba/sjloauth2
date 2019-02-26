@@ -1,4 +1,4 @@
-package com.sjl.sjloauth2.gateway;
+package com.sjl.sjloauth2.gateway.filter;
 
 import org.springframework.cloud.gateway.filter.GatewayFilter;
 import org.springframework.cloud.gateway.filter.GatewayFilterChain;

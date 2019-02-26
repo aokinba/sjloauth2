@@ -29,7 +29,7 @@ public class OAuthConfiguration extends AuthorizationServerConfigurerAdapter {
                 .authorities("WRIGTH_READ", "WRIGTH_WRITE")
                 .authorizedGrantTypes("implicit", "refresh_token", "password", "authorization_code")
                 .redirectUris("http://www.baidu.com", "http://localhost:8080/login/oauth2/code/test_server", "http://localhost:9528/login?redirect=/dashboard",
-                        "http://localhost:9999/login", "http://localhost:9528/ssologin","http://192.168.56.1:8080/client/test");
+                        "http://localhost:9999/login", "http://localhost:9528/ssologin", "http://192.168.56.1:8080/client/test", "http://192.168.56.1:8080/login/oauth2/code/test_server");
     }
 
     @Override
