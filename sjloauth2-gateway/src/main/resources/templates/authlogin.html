@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+    <title正在登录</title>
+    <script src="https://cdn.staticfile.org/vue/2.4.2/vue.min.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+</head>
+<body>
+    <div>正在登录请稍等</div>
+    <script type="text/javascript">
+        var vm = new Vue({
+            el: '#vue_det',
+            data: {
+                state: '',
+                code: ''
+            },
+            mounted: function () {
+                this.code = this.getUrlParam('code');
+                this.state = this.getUrlParam('state');
+                this.getToken();
+            },
+            methods: {
+                getToken: function () {
+                    let $ = this;
+                    console.log(this.code);
+                    // 为给定 ID 的 user 创建请求
+                    axios.get('/auth/getToken', {
+                        params: {
+                            code: this.code,
+                            state: this.state
+                        }
+                    }).then(function (response) {
+                        console.log(response.data);
+                        console.log(response.data.access_token);
+                        return response.data.access_token;
+                    }).then(function (token) {
+                        console.log(token);
+                        $.putToken(token);
+                    });
+                },
+                toRedirect: function () {
+                    window.location.href = this.state; 
+                },
+                putToken: function (token) {
+                    let $ = this;
+                    axios.post('/auth/putToken', {
+                        token: token
+                    }).then(function (response) {
+                        console.log(response);
+                        $.toRedirect();
+                    }).catch(function (error) {
+                        console.log(error);
+                    });
+                },
+                getUrlParam: function (paraName) {
+                    var url = document.location.toString();
+                    var arrObj = url.split("?");
+                    if (arrObj.length > 1) {
+                        var arrPara = arrObj[1].split("&");
+                        var arr;
+                        for (var i = 0; i < arrPara.length; i++) {
+                            arr = arrPara[i].split("=");
+                            if (arr !== null && arr[0] === paraName) {
+                                return arr[1];
+                            }
+                        }
+                        return "";
+                    } else {
+                        return "";
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>

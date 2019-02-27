@@ -48,7 +48,7 @@ public class AuthServerWebClient {
         MultiValueMap<String, String> formData = new LinkedMultiValueMap<>();
         formData.add("client_id", "test_server");
         formData.add("grant_type", "authorization_code");
-        formData.add("redirect_uri", "http://192.168.56.1:8080/client/test");
+        formData.add("redirect_uri", "http://192.168.56.1:8080/authlogin");
         formData.add("code", code);
 
         return WebClient

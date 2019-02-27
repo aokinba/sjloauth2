@@ -18,6 +18,8 @@ logging:
 #    org.springframework.boot.autoconfigure: DEBUG
 
 spring:
+  thymeleaf:
+    cache: false
   cloud:
     gateway:
       discovery:
