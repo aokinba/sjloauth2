@@ -1,11 +1,12 @@
-server:
-  port: 7070
 spring:
-  application:
-    name: client-a
-eureka:
-  client:
-    serviceUrl:
-      defaultZone: http://${eureka.host:127.0.0.1}:${eureka.port:8761}/eureka/
-  instance:
-    prefer-ip-address: true
+    application:
+        name: client-a
+    cloud:
+        config:
+            discovery:
+              enabled: true
+              service-id: SJL-CONFIG-GIT  # 注册中心的服务名
+            profile: dev  # 指定配置文件的环境
+
+
+
