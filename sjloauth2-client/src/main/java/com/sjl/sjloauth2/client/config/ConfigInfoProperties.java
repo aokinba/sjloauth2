@@ -1,6 +1,7 @@
 package com.sjl.sjloauth2.client.config;
 
-import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.stereotype.Component;
 
 /**
@@ -12,9 +13,10 @@ import org.springframework.stereotype.Component;
  * @description : 配置信息
  */
 @Component
-@ConfigurationProperties(prefix = "cn.springcloud.book")
+@RefreshScope
 public class ConfigInfoProperties {
 
+    @Value("${cn.springcloud.book.config}")
     private String config;
 
     public String getConfig() {
