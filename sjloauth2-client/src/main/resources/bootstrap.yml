@@ -1,11 +1,37 @@
+#spring:
+#    application:
+#        name: client-a
+#    cloud:
+#        config:
+#            discovery:
+#              enabled: true
+#              service-id: SJL-CONFIG-GIT  # 注册中心的服务名
+#            profile: dev  # 指定配置文件的环境
+
+
+server:
+  port: 7071
 spring:
-    application:
-        name: client-a
-    cloud:
-        config:
-            discovery:
-              enabled: true
-              service-id: SJL-CONFIG-GIT  # 注册中心的服务名
-            profile: dev  # 指定配置文件的环境
-
-
+  application:
+    name: client-a
+  ## 配置rabbitMQ 信息
+  rabbitmq:
+      host: localhost
+      port: 5672
+      username: guest
+      password: guest
+  cloud:
+      bus:
+        trace:
+            enabled: true
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://${eureka.host:127.0.0.1}:${eureka.port:8761}/eureka/
+  instance:
+    prefer-ip-address: true
+    
+cn: 
+ springcloud: 
+          book: 
+            config: I am the git configuration file from dev environment. I will edit it. 1111111111

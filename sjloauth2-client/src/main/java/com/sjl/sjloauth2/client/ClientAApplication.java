@@ -44,7 +44,7 @@ public class ClientAApplication extends ResourceServerConfigurerAdapter {
 
         System.out.println("getQueryString : " + request.getPathInfo());
 
-        return "test";
+        return "test22222222";
     }
 
     @RequestMapping("/userinfo")
