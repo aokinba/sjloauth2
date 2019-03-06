@@ -67,6 +67,7 @@ public class ClientAApplication extends ResourceServerConfigurerAdapter {
         http
                 .csrf().disable()
                 .authorizeRequests()
+                .antMatchers(HttpMethod.POST, "/actuator/refresh").permitAll() //允许git配置文件刷新
                 .antMatchers(HttpMethod.GET, "/test").hasAuthority("WRIGTH_WRITE")
                 .antMatchers("/**").authenticated();
     }
