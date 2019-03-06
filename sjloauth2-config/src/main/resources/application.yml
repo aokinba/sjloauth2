@@ -9,6 +9,14 @@ spring:
           search-paths: base-config
   application:
     name: sjl-config-git
+    
+  ## 配置rabbitMQ 信息
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: guest
+    password: guest
+    
 server:
     port: 9090
 eureka:
