@@ -5,11 +5,9 @@
  */
 package com.sjl.sjloauth2.gateway.filter;
 
-import com.sjl.sjloauth2.gateway.utils.AuthServerWebClient;
 import com.sjl.sjloauth2.gateway.utils.TokenContextHolder;
 import io.micrometer.core.instrument.util.StringUtils;
 import java.net.URI;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.gateway.filter.GatewayFilter;
 import org.springframework.cloud.gateway.filter.factory.AbstractGatewayFilterFactory;
 import org.springframework.http.HttpStatus;
@@ -23,16 +21,13 @@ import org.springframework.web.server.ServerWebExchange;
 @Component
 public class MyPreGatewayFilterFactory extends AbstractGatewayFilterFactory<MyPreGatewayFilterFactory.Config> {
 
-    @Autowired
-    private AuthServerWebClient authServerWebClient;
-
     public MyPreGatewayFilterFactory() {
         super(Config.class);
     }
 
     @Override
     public GatewayFilter apply(Config config) {
-        return (exchange, chain) -> {            
+        return (exchange, chain) -> {
             String token = exchange.getRequest().getQueryParams().getFirst("access_token");
             String code = exchange.getRequest().getQueryParams().getFirst("code");
             URI uri = exchange.getRequest().getURI();
