@@ -62,5 +62,6 @@
         <module>sjloauth2-client</module>
         <module>sjloauth2-gateway</module>
         <module>sjloauth2-config</module>
+        <module>sjloauth2-turbine</module>
     </modules>
 </project>
