@@ -1,5 +1,6 @@
 package com.sjl.sjloauth2.client.controller;
 
+import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -8,6 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class TestController {
 
     @GetMapping("/hystrixTest")
+    @HystrixCommand(fallbackMethod = "defaultUser",commandKey = "hystrixTest")
     public String hystrixTest(@RequestParam String username) throws Exception {
         if (username.equals("spring")) {
             return "This is real user";

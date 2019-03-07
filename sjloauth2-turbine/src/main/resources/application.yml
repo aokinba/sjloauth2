@@ -12,5 +12,5 @@ management:
       exposure:
         include: hystrix.stream
 turbine:
-  appConfig: gateway
+  appConfig: client-a
   clusterNameExpression: "'default'"

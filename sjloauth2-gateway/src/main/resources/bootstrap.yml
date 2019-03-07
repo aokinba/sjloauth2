@@ -35,10 +35,6 @@ spring:
           filters:
             - MyPre=     #必须要放在StripPrefix前面，不要path路径会变
             - StripPrefix=1
-            - name: Hystrix # Hystrix Filter的名称
-              args: # Hystrix配置参数
-                name: fallbackcmd #HystrixCommand的名字
-                fallbackUri: forward:/fallback #fallback对应的uri
         - id: AUTH-SERVER          #vue 接入oauth
           uri: lb://AUTH-SERVER
           predicates:
@@ -50,15 +46,6 @@ spring:
           filters:
             - StripPrefix=1
 
-#Hystrix的fallbackcmd的时间
-hystrix.command.fallbackcmd.execution.isolation.thread.timeoutInMilliseconds: 6000
-management:
-  security:
-    enabled: false
-  endpoints:
-    web:
-      exposure:
-        include: hystrix.stream
 
 # 以下为网关中继的配置
 #  autoconfigure:
