@@ -83,4 +83,9 @@ public class TestController {
 
 
 ## 运行效果
-
+- 浏览器运行http://localhost:9088/hystrix
+- 输入http://localhost:9088/turbine.stream
+- 点击Monitor Stream
+![1551924636812](https://github.com/aokinba/sjloauth2/blob/master/img-folder/QQ%E6%88%AA%E5%9B%BE20190307160241.png)
+- 分别运行http://192.168.56.1:8080/client/hystrixTest?username=spring  和 http://192.168.56.1:8080/client/hystrixTest?username=sjl  的效果
+![1551924636812](https://github.com/aokinba/sjloauth2/blob/master/img-folder/QQ%E6%88%AA%E5%9B%BE20190307160632.png)
