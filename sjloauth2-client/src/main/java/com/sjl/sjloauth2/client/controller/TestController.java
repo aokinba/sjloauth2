@@ -7,12 +7,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class TestController {
-
-    @GetMapping("/add")
-    public Integer add(Integer a, Integer b) {
-        return a + b;
-    }
-
+    
     @GetMapping("/hystrixTest")
     @HystrixCommand(fallbackMethod = "defaultUser")
     public String hystrixTest(@RequestParam String username) throws Exception {
