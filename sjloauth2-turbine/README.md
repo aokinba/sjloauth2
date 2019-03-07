@@ -10,7 +10,7 @@ management:
       exposure:
         include: hystrix.stream
 turbine:
-  appConfig: client-a
+  appConfig: gateway
   clusterNameExpression: "'default'"
 ```
 - 启动文件
@@ -26,9 +26,34 @@ public class TurbineApplication {
 ```
 
 
-## client客户端
-- 添加配置文件：开放hystrix.stream端口，和设置要监控的服务
+## gateway作hystrix客户端
+- 添加配置文件：开放hystrix.stream端口和添加Hystrix过滤器
 ``` yml
+spring:
+  application:
+    name: gateway
+  thymeleaf:
+    cache: false
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+      routes:
+        - id: CLIENT-A           #网关路由到订单服务order-service
+          uri: lb://CLIENT-A
+          predicates:
+            - Path=/client/**
+          filters:
+            - MyPre=     #必须要放在StripPrefix前面，不要path路径会变
+            - StripPrefix=1
+            - name: Hystrix # Hystrix Filter的名称
+              args: # Hystrix配置参数
+                name: fallbackcmd #HystrixCommand的名字
+                fallbackUri: forward:/fallback #fallback对应的uri
+                
+#Hystrix的fallbackcmd的时间                
+hystrix.command.fallbackcmd.execution.isolation.thread.timeoutInMilliseconds: 6000
 management:
   security:
     enabled: false
@@ -36,33 +61,21 @@ management:
     web:
       exposure:
         include: hystrix.stream
-turbine:
-  appConfig: client-a
-  clusterNameExpression: "'default'"
 ```
 - 启动文件添加@EnableHystrix
-- antMatchers("/actuator/hystrix.stream").permitAll()//允许断容器仪表访问  
-```
-    @Override
-    public void configure(HttpSecurity http) throws Exception {
-        http
-                .csrf().disable()
-                .authorizeRequests()
-                .antMatchers(HttpMethod.POST, "/actuator/refresh").permitAll() //允许git配置文件刷新
-                .antMatchers("/actuator/hystrix.stream").permitAll()//允许断容器仪表访问                
-                .antMatchers(HttpMethod.GET, "/test").hasAuthority("WRIGTH_WRITE")
-                .antMatchers("/**").authenticated();
-    }
-```
-- 测试controller
+
+- client项目添加测试controller
 ```
 @RestController
 public class TestController {
     
     @GetMapping("/hystrixTest")
-    @HystrixCommand(fallbackMethod = "defaultUser")
     public String hystrixTest(@RequestParam String username) throws Exception {
         if (username.equals("spring")) {
+            return "This is real user";
+        }
+        if (username.equals("test")) {
+            Thread.sleep(5000);
             return "This is real user";
         } else {
             throw new Exception();
