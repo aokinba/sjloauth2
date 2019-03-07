@@ -7,11 +7,15 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class TestController {
-    
+
     @GetMapping("/hystrixTest")
-    @HystrixCommand(fallbackMethod = "defaultUser")
+    @HystrixCommand(fallbackMethod = "defaultUser",commandKey = "hystrixTest")
     public String hystrixTest(@RequestParam String username) throws Exception {
         if (username.equals("spring")) {
+            return "This is real user";
+        }
+        if (username.equals("test")) {
+            Thread.sleep(5000);
             return "This is real user";
         } else {
             throw new Exception();
