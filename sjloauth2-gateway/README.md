@@ -4,7 +4,7 @@
 
 - 访问http://192.168.56.1:8080/client/test
 因为没有权限，跳转到登录页面
-  ![1551924636812](https://github.com/aokinba/sjloauth2/blob/master/img-folder/QQ%E6%88%AA%E5%9B%BE20190307101720.png)
+  ![1551924636812](https://github.com/aokinba/sjloauth2/blob/master/doc/img-folder/QQ%E6%88%AA%E5%9B%BE20190307101720.png)
 -  在路由配置文件加上自定义过滤器 MyPre *sjloauth2-gateway*
 ``` yml
          routes:
