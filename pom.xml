@@ -21,6 +21,10 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-actuator</artifactId>
         </dependency>
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-sleuth</artifactId>
+        </dependency>
     </dependencies>
 
     <!-- 管理依赖 -->
@@ -63,5 +67,7 @@
         <module>sjloauth2-gateway</module>
         <module>sjloauth2-config</module>
         <module>sjloauth2-turbine</module>
+        <module>sjloauth2-clientb</module>
+        <module>sjloauth2-zipkin</module>
     </modules>
 </project>

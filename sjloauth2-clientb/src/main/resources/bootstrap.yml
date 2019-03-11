@@ -10,10 +10,10 @@
 
 
 server:
-  port: 7071
+  port: 7072
 spring:
   application:
-    name: client-a
+    name: client-b
   ## 配置rabbitMQ 信息
   rabbitmq:
       host: localhost

@@ -42,7 +42,7 @@ public class MyPreGatewayFilterFactory extends AbstractGatewayFilterFactory<MyPr
                     && StringUtils.isBlank(TokenContextHolder.getToken())) {
                 //当请求不携带Token或者token为空时，直接设置请求状态码为401，返回
                 exchange.getResponse().getHeaders().add("Location", "/uaa/oauth/authorize?client_id=test_server&"
-                        + "response_type=code&redirect_uri=http://192.168.56.1:8080/authlogin&state=" + path);
+                        + "response_type=code&redirect_uri=http://10.0.75.1:8080/authlogin&state=" + path);
                 exchange.getResponse().setStatusCode(HttpStatus.FOUND);
                 return exchange.getResponse().setComplete();
             }
