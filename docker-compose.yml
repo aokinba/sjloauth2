@@ -1,0 +1,65 @@
+version: '3' # 表示该 Docker-Compose 文件使用的是 Version 2 file
+services:
+  eureka1:  # 指定服务名称
+    restart: always
+    build: ./sjloauth2-eureka  # 指定 Dockerfile 所在路径
+    ports:    # 指定端口映射
+      - "8761:8761"
+    environment:
+      - EUREKA_SERVER_HOST=192.168.1.180
+      - EUREKA_SERVER_PORT=8761
+  auth:  # 指定服务名称
+    restart: always
+    build: ./sjloauth2-auth  # 指定 Dockerfile 所在路径
+    ports:    # 指定端口映射
+      - "7777:7777"
+    environment:
+      - EUREKA_SERVER_HOST=192.168.1.180
+      - EUREKA_SERVER_PORT=8761
+    depends_on:
+      - eureka1
+  gateway:  # 指定服务名称
+    restart: always
+    build: ./sjloauth2-gateway  # 指定 Dockerfile 所在路径
+    ports:    # 指定端口映射
+      - "8080:8080"
+    environment:
+      - EUREKA_SERVER_HOST=192.168.1.180
+      - EUREKA_SERVER_PORT=8761
+    depends_on:
+      - eureka1
+  client:  # 指定服务名称
+    restart: always
+    build: ./sjloauth2-client  # 指定 Dockerfile 所在路径
+    ports:    # 指定端口映射
+      - "7071:7071"
+    environment:
+      - EUREKA_SERVER_HOST=192.168.1.180
+      - EUREKA_SERVER_PORT=8761
+    depends_on:
+      - eureka1
+#  clientb:  # 指定服务名称
+#    restart: always
+#    build: ./sjloauth2-clientb  # 指定 Dockerfile 所在路径
+#    ports:    # 指定端口映射
+#      - "7072:7072"
+#    environment:
+#      - PROFILE=default
+#  turbine:  # 指定服务名称
+#    restart: always
+#    build: ./sjloauth2-turbine  # 指定 Dockerfile 所在路径
+#    ports:    # 指定端口映射
+#      - "9088:9088"
+#    environment:
+#      - PROFILE=default
+#      - EUREKA_SERVER_HOST = 192.168.1.180
+#      - EUREKA_SERVER_PORT = 8761
+#  zipkin:  # 指定服务名称
+#    restart: always
+#    build: ./sjloauth2-zipkin  # 指定 Dockerfile 所在路径
+#    ports:    # 指定端口映射
+#      - "9410:9410"
+#    environment:
+#      - PROFILE=default
+  
+  
