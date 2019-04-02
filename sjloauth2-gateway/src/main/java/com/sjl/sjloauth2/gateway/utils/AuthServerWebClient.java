@@ -5,9 +5,9 @@
  */
 package com.sjl.sjloauth2.gateway.utils;
 
+import io.micrometer.core.instrument.util.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.client.loadbalancer.reactive.LoadBalancerExchangeFilterFunction;
-import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
@@ -31,7 +31,9 @@ public class AuthServerWebClient {
         MultiValueMap<String, String> formData = new LinkedMultiValueMap<>();
         formData.add("client_id", "test_server");
         formData.add("grant_type", "authorization_code");
-        formData.add("redirect_uri", "http://10.0.75.1:8080/authlogin");
+        String ipAddress = System.getenv("IP_ADDRESS");
+        ipAddress = StringUtils.isBlank(ipAddress) ? "127.0.0.1" : ipAddress;
+        formData.add("redirect_uri", "http://" + ipAddress + ":8080/authlogin");
         formData.add("code", code);
 
         return WebClient

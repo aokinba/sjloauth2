@@ -16,7 +16,7 @@ spring:
     name: client-a
   ## 配置rabbitMQ 信息
   rabbitmq:
-      host: 192.168.1.180
+      host: ${RABBIT_MQ_SERVER_HOST:127.0.0.1}
       port: 5672
       username: guest
       password: guest
@@ -24,13 +24,13 @@ spring:
       bus:
         trace:
             enabled: true
-#  zipkin:
-#    ##zipkin地址 如果是服务发现http://zipkinserver/
-#    baseUrl: http://192.168.1.180:9411/  
-#    ##关闭服务发现
-#    discoveryClientEnabled: false  
-#    ##如果maven同时存在  zipkin 和 rabbit 或 kafka ，则填写对应的类型
-#    sender.type: web
+  zipkin:
+    ##zipkin地址 如果是服务发现http://zipkinserver/
+    baseUrl: http://${ZIPKIN_SERVER_HOST:127.0.0.1}:9411/  
+    ##关闭服务发现
+    discoveryClientEnabled: false  
+    ##如果maven同时存在  zipkin 和 rabbit 或 kafka ，则填写对应的类型
+    sender.type: web
   sleuth: 
     ## 启用webClient注入
     web.client.enabled: true
@@ -39,9 +39,10 @@ spring:
 eureka:
   client:
     serviceUrl:
-      defaultZone: http://${EUREKA_SERVER_HOST}:${EUREKA_SERVER_PORT}/eureka/
+      defaultZone: http://${EUREKA_SERVER_HOST:127.0.0.1}:${EUREKA_SERVER_PORT:8761}/eureka/
   instance:
     prefer-ip-address: true
+    ip-address: ${IP_ADDRESS:127.0.0.1}
      
 management:
   security:

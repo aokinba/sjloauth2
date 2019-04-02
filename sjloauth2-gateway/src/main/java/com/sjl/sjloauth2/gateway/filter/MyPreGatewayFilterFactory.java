@@ -35,6 +35,8 @@ public class MyPreGatewayFilterFactory extends AbstractGatewayFilterFactory<MyPr
             System.out.println("=========================");
             System.out.println("=========================path = " + path + "  code = " + code);
             System.out.println("=========================");
+            String ipAddress = System.getenv("IP_ADDRESS");
+            ipAddress = StringUtils.isBlank(ipAddress)?"127.0.0.1":ipAddress;
             //如果请求没有带token，则跳转到授权页面。授权成功会跳转到回调地址
             if (StringUtils.isBlank(token)
                     && !path.contains("uaa/oauth/authorize")
@@ -42,7 +44,7 @@ public class MyPreGatewayFilterFactory extends AbstractGatewayFilterFactory<MyPr
                     && StringUtils.isBlank(TokenContextHolder.getToken())) {
                 //当请求不携带Token或者token为空时，直接设置请求状态码为401，返回
                 exchange.getResponse().getHeaders().add("Location", "/uaa/oauth/authorize?client_id=test_server&"
-                        + "response_type=code&redirect_uri=http://10.0.75.1:8080/authlogin&state=" + path);
+                        + "response_type=code&redirect_uri=http://"+ ipAddress +":8080/authlogin&state=" + path);
                 exchange.getResponse().setStatusCode(HttpStatus.FOUND);
                 return exchange.getResponse().setComplete();
             }
