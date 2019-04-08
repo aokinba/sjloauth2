@@ -45,6 +45,7 @@ spring:
           predicates:
             - Path=/imgserver/**
           filters:
+            - MyPre=     #必须要放在StripPrefix前面，不要path路径会变
             - StripPrefix=1
 
 

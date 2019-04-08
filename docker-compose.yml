@@ -1,14 +1,5 @@
 version: '3' # 表示该 Docker-Compose 文件使用的是 Version 2 file
 services:
-  eureka1:  # 指定服务名称
-    restart: always
-    build: ./sjloauth2-eureka  # 指定 Dockerfile 所在路径
-    ports:    # 指定端口映射
-      - "8761:8761"
-    environment:
-      - EUREKA_SERVER_HOST=192.168.1.180
-      - EUREKA_SERVER_PORT=8761
-      - IP_ADDRESS=192.168.1.180
   auth:  # 指定服务名称
     restart: always
     build: ./sjloauth2-auth  # 指定 Dockerfile 所在路径
@@ -18,8 +9,6 @@ services:
       - EUREKA_SERVER_HOST=192.168.1.180
       - EUREKA_SERVER_PORT=8761
       - IP_ADDRESS=192.168.1.180
-    depends_on:
-      - eureka1
   gateway:  # 指定服务名称
     restart: always
     build: ./sjloauth2-gateway  # 指定 Dockerfile 所在路径
@@ -29,8 +18,6 @@ services:
       - EUREKA_SERVER_HOST=192.168.1.180
       - EUREKA_SERVER_PORT=8761
       - IP_ADDRESS=192.168.1.180
-    depends_on:
-      - eureka1
   client:  # 指定服务名称
     restart: always
     build: ./sjloauth2-client  # 指定 Dockerfile 所在路径
@@ -42,8 +29,6 @@ services:
       - ZIPKIN_SERVER_HOST=192.168.1.180
       - RABBIT_MQ_SERVER_HOST=192.168.1.180
       - IP_ADDRESS=192.168.1.180
-    depends_on:
-      - eureka1
   clientb:  # 指定服务名称
     restart: always
     build: ./sjloauth2-clientb  # 指定 Dockerfile 所在路径
