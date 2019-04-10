@@ -69,5 +69,6 @@
         <module>sjloauth2-turbine</module>
         <module>sjloauth2-clientb</module>
         <module>sjloauth2-zipkin</module>
+        <module>sjloauth2-common</module>
     </modules>
 </project>

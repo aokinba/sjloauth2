@@ -23,6 +23,17 @@ spring:
     name: gateway
   thymeleaf:
     cache: false
+  redis:
+    database: 0  
+    password: 
+    port: 6379  
+    host: localhost
+    lettuce:
+      pool:
+        max-idle: 8
+        min-idle: 0
+        max-active: 8
+        max-wait: -1
   cloud:
     gateway:
       discovery:
@@ -49,29 +60,4 @@ spring:
             - StripPrefix=1
 
 
-# 以下为网关中继的配置
-#  autoconfigure:
-#    # TODO: remove when fixed https://github.com/spring-projects/spring-security/issues/6314
-#    exclude: org.springframework.boot.actuate.autoconfigure.security.reactive.ReactiveManagementWebSecurityAutoConfiguration    
-#  thymeleaf:
-#    cache: false
-#  security:
-#    oauth2:
-#      client:
-#        registration:
-#          test_server:
-#            provider: uaa
-#            client-id: test_server
-#            client-secret: secret
-#            authorization-grant-type: authorization_code
-#            redirect-uri-template: "{baseUrl}/login/oauth2/code/{registrationId}"
-#            scope: WRIGTH,read
-#        provider:
-#          uaa:
-#            authorization-uri: http://localhost:7777/uaa/oauth/authorize
-#            token-uri: http://localhost:7777/uaa/oauth/token
-#            user-info-uri: http://localhost:7070/userinfo
-#            user-name-attribute: sub
-#        resource:
-#          jwt:
-#            key-value: springcloud123 #使用对称加密方式，默认算法为HS256
+

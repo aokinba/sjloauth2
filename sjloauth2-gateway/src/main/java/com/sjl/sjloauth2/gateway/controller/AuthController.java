@@ -1,10 +1,11 @@
 package com.sjl.sjloauth2.gateway.controller;
 
 import com.sjl.sjloauth2.gateway.utils.AuthServerWebClient;
-import com.sjl.sjloauth2.gateway.utils.TokenContextHolder;
 import io.micrometer.core.instrument.util.StringUtils;
 import java.util.Map;
+import javax.annotation.Resource;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -17,6 +18,8 @@ public class AuthController {
     
     @Autowired
     private AuthServerWebClient authServerWebClient;
+    @Resource
+    private RedisTemplate<String, String> redisTemplate;
 
     /**
      * 获取code
@@ -45,7 +48,7 @@ public class AuthController {
         if (StringUtils.isBlank(token)) {
             throw new RuntimeException("token 为空");
         }
-        TokenContextHolder.set(token);
+        this.redisTemplate.opsForValue().set("token", token);
         return Mono.just("succeed");
     }
 }
