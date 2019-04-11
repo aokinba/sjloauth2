@@ -4,9 +4,12 @@
  * and open the template in the editor.
  */
 package com.sjl.sjloauth2.gateway.filter;
+
 import io.micrometer.core.instrument.util.StringUtils;
 import java.net.URI;
 import javax.annotation.Resource;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.cloud.gateway.filter.GatewayFilter;
 import org.springframework.cloud.gateway.filter.factory.AbstractGatewayFilterFactory;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -20,6 +23,9 @@ import org.springframework.web.server.ServerWebExchange;
  */
 @Component
 public class MyPreGatewayFilterFactory extends AbstractGatewayFilterFactory<MyPreGatewayFilterFactory.Config> {
+
+    Logger logger = LoggerFactory.getLogger(MyPreGatewayFilterFactory.class);
+
     @Resource
     private RedisTemplate<String, String> redisTemplate;
 
@@ -34,12 +40,13 @@ public class MyPreGatewayFilterFactory extends AbstractGatewayFilterFactory<MyPr
             String code = exchange.getRequest().getQueryParams().getFirst("code");
             URI uri = exchange.getRequest().getURI();
             String path = uri.getPath();
-            System.out.println("=========================");
-            System.out.println("=========================path = " + path + "  code = " + code);
-            System.out.println("=========================");
+            logger.debug("=========================");
+            logger.debug("=========================path = " + path + "  code = " + code);
+            logger.debug("=========================");
             String ipAddress = System.getenv("IP_ADDRESS");
-            ipAddress = StringUtils.isBlank(ipAddress)?"127.0.0.1":ipAddress;
+            ipAddress = StringUtils.isBlank(ipAddress) ? "127.0.0.1" : ipAddress;
             String tokenRedis = this.redisTemplate.opsForValue().get("token");
+            System.out.println("========================= tokenRedis" +tokenRedis);
             //如果请求没有带token，则跳转到授权页面。授权成功会跳转到回调地址
             if (StringUtils.isBlank(token)
                     && !path.contains("uaa/oauth/authorize")
@@ -47,7 +54,7 @@ public class MyPreGatewayFilterFactory extends AbstractGatewayFilterFactory<MyPr
                     && StringUtils.isBlank(tokenRedis)) {
                 //当请求不携带Token或者token为空时，直接设置请求状态码为401，返回
                 exchange.getResponse().getHeaders().add("Location", "/uaa/oauth/authorize?client_id=test_server&"
-                        + "response_type=code&redirect_uri=http://"+ ipAddress +":8080/authlogin&state=" + path);
+                        + "response_type=code&redirect_uri=http://" + ipAddress + ":8080/authlogin&state=" + path);
                 exchange.getResponse().setStatusCode(HttpStatus.FOUND);
                 return exchange.getResponse().setComplete();
             }
